@@ -14,11 +14,11 @@ const Chyron = ({ items }: ChyronProps) => {
         Mango D'Or · En Vivo
       </span>
 
-      {/* edge fades */}
-      <div className="pointer-events-none absolute inset-y-0 left-[210px] z-10 w-16 bg-gradient-to-r from-ink/80 to-transparent" />
-      <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-ink/80 to-transparent" />
+      <div className="relative flex-1 overflow-hidden">
+        {/* edge fades — anchored to the ticker column so they always align */}
+        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-ink/70 to-transparent" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-ink/70 to-transparent" />
 
-      <div className="flex-1 overflow-hidden">
         <div className="animate-ticker flex w-max items-center gap-10 whitespace-nowrap py-3 font-mono-retro text-sm text-white/80">
           {loop.map((item, index) => (
             <span key={`${item}-${index}`} className="flex items-center gap-3">

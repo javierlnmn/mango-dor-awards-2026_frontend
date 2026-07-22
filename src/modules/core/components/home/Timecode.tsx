@@ -50,20 +50,16 @@ const Timecode = ({ targetDate }: TimecodeProps) => {
   ];
 
   return (
-    <div className="flex flex-wrap items-stretch gap-3 md:gap-4">
+    <div className="flex flex-wrap items-end gap-x-8 gap-y-6 md:gap-x-14">
       {units.map((unit) => (
-        <div
-          key={unit.label}
-          className="glass holo-border group relative flex min-w-[74px] flex-1 flex-col items-center overflow-hidden rounded-xl px-3 py-4 md:min-w-[120px] md:px-6 md:py-6"
-        >
-          <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cyan-300/70 to-transparent" />
+        <div key={unit.label} className="flex flex-col">
           <div
-            className="odometer-fast font-mono-retro text-4xl text-cyan-200 md:text-6xl"
-            style={{ textShadow: '0 0 18px rgba(34,211,238,0.6)' }}
+            className="odometer-fast font-brutal text-6xl font-black leading-none text-white md:text-8xl"
+            style={{ textShadow: '0 0 26px rgba(34,211,238,0.45)' }}
           >
             <Odometer value={unit.value} format="dd" />
           </div>
-          <span className="mt-3 text-[10px] uppercase tracking-[0.3em] text-white/45">
+          <span className="font-mono-retro mt-4 text-[10px] uppercase tracking-[0.35em] text-cyan-300/60">
             {unit.label}
           </span>
         </div>

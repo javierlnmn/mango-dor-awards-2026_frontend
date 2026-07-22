@@ -1,4 +1,5 @@
-import { motion } from 'motion/react';
+import { motion, useScroll, useTransform } from 'motion/react';
+import { useRef } from 'react';
 
 import BroadcastHud from '@/modules/core/components/home/BroadcastHud';
 
@@ -14,8 +15,19 @@ const line = {
 };
 
 const Hero = () => {
+  const ref = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ['start start', 'end start'],
+  });
+  // As the hero scrolls away, the title zooms up and fades out.
+  const titleScale = useTransform(scrollYProgress, [0, 1], [1, 1.7]);
+  const titleOpacity = useTransform(scrollYProgress, [0, 0.55], [1, 0]);
+  const titleY = useTransform(scrollYProgress, [0, 1], [0, -50]);
+
   return (
     <section
+      ref={ref}
       id="inicio"
       className="relative flex min-h-screen flex-col px-6 pb-10 pt-24 md:px-12 md:pt-20"
     >
@@ -26,50 +38,50 @@ const Hero = () => {
         Transmisión en directo · MMXXVI
       </span>
 
-      {/* Wordmark */}
+      {/* Wordmark — brutalist, staggered placement, vertically centered */}
       <motion.div
         initial="hidden"
         animate="show"
         transition={{ staggerChildren: 0.09, delayChildren: 0.1 }}
-        className="flex flex-1 flex-col justify-end"
+        style={{ scale: titleScale, opacity: titleOpacity, y: titleY }}
+        className="flex flex-1 flex-col justify-center md:pl-[3vw] lg:pl-[6vw]"
       >
         <motion.p
           variants={line}
           transition={{ duration: 0.6, ease: 'easeOut' }}
-          className="font-mono-retro mb-6 flex items-center gap-3 text-xs uppercase tracking-[0.35em] text-cyan-300/80"
+          className="font-mono-retro mb-8 flex items-center gap-3 text-xs uppercase tracking-[0.35em] text-cyan-300/80"
         >
           <span className="h-px w-10 bg-cyan-300/50" />
-          Edición 2026 · Premios entre amigos
+          Premios entre amigos
         </motion.p>
 
-        <h1 className="font-brutal uppercase leading-[0.82]">
+        <h1 className="font-brutal uppercase leading-[0.78]">
           <motion.span
             variants={line}
             transition={{ duration: 0.6, ease: 'easeOut' }}
-            className="block text-2xl font-semibold tracking-[0.2em] text-white/40 md:text-3xl"
-          >
-            Los
-          </motion.span>
-          <motion.span
-            variants={line}
-            transition={{ duration: 0.6, ease: 'easeOut' }}
-            className="holo-text block text-[clamp(3.2rem,12vw,11rem)] font-black tracking-tight [filter:drop-shadow(0_0_28px_rgba(139,92,246,0.4))]"
+            className="holo-text block text-[clamp(3.4rem,12.5vw,11rem)] font-black tracking-tighter [filter:drop-shadow(0_0_28px_rgba(139,92,246,0.4))]"
           >
             Mango
           </motion.span>
           <motion.span
             variants={line}
             transition={{ duration: 0.6, ease: 'easeOut' }}
-            className="text-stroke-cyan font-brutal block text-[clamp(3.2rem,12vw,11rem)] font-black tracking-tight"
+            className="text-stroke-cyan font-brutal ml-[16%] block text-[clamp(3.4rem,12.5vw,11rem)] font-black tracking-tighter md:ml-[24%]"
           >
             D'Or
           </motion.span>
           <motion.span
             variants={line}
             transition={{ duration: 0.6, ease: 'easeOut' }}
-            className="block text-4xl font-bold tracking-[0.25em] text-white md:text-6xl"
+            className="ml-[4%] mt-5 flex items-center gap-4 md:gap-6"
           >
-            Awards
+            <span className="text-2xl font-bold tracking-[0.4em] text-white/85 md:text-4xl">
+              Awards
+            </span>
+            <span className="hidden h-px w-8 bg-white/25 sm:block md:w-16" />
+            <span className="glow-cyan text-2xl font-bold tracking-[0.2em] text-cyan-300 md:text-4xl">
+              2026
+            </span>
           </motion.span>
         </h1>
       </motion.div>
@@ -79,7 +91,7 @@ const Hero = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.6, ease: 'easeOut' }}
-        className="mt-12 flex flex-wrap items-end justify-between gap-6 border-t border-white/10 pt-6"
+        className="flex flex-wrap items-end justify-between gap-6 border-t border-white/10 pt-6"
       >
         <div className="flex items-stretch gap-6 md:gap-10">
           {STATS.map((stat) => (

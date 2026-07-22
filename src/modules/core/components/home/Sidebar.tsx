@@ -1,33 +1,32 @@
 import { AnimatePresence, motion } from 'motion/react';
 import { useEffect, useState } from 'react';
-import { FiArrowUpRight, FiMenu, FiX } from 'react-icons/fi';
+import { FiArrowRight, FiMenu, FiX } from 'react-icons/fi';
 
 import logo from '@/assets/logo.png';
 
 interface NavItem {
-  id: string;
+  href: string;
   label: string;
 }
 
 const NAV: NavItem[] = [
-  { id: 'inicio', label: 'Inicio' },
-  { id: 'programacion', label: 'Programación' },
-  { id: 'categorias', label: 'Categorías' },
-  { id: 'votar', label: 'Cómo votar' },
-  { id: 'cuenta-atras', label: 'Cuenta atrás' },
+  { href: '/', label: 'Inicio' },
+  { href: '/candidatos', label: 'Candidatos' },
+  { href: '/categorias', label: 'Categorías' },
+  { href: '/votar', label: 'Votar' },
+  { href: '/resultados', label: 'Resultados' },
 ];
 
 interface NavContentProps {
   active: string;
   onNavigate: () => void;
-  layoutScope: string;
 }
 
-const NavContent = ({ active, onNavigate, layoutScope }: NavContentProps) => (
+const NavContent = ({ active, onNavigate }: NavContentProps) => (
   <div className="flex h-full flex-col p-6">
     {/* Emblem */}
     <a
-      href="#inicio"
+      href="/"
       onClick={onNavigate}
       className="group flex items-center gap-3"
     >
@@ -49,40 +48,30 @@ const NavContent = ({ active, onNavigate, layoutScope }: NavContentProps) => (
     {/* Nav */}
     <nav className="mt-12 flex-1">
       <p className="font-mono-retro mb-4 text-[10px] uppercase tracking-[0.3em] text-white/30">
-        Canales
+        Navegación
       </p>
       <ul className="space-y-1">
-        {NAV.map((item, i) => {
-          const isActive = active === item.id;
+        {NAV.map((item) => {
+          const isActive = active === item.href;
           return (
-            <li key={item.id}>
+            <li key={item.href}>
               <a
-                href={`#${item.id}`}
+                href={item.href}
                 onClick={onNavigate}
-                className={`group relative flex items-center gap-3 rounded-lg px-3 py-2.5 font-mono-retro text-sm transition-colors duration-200 ${
+                className={`group flex items-center gap-3 py-2 font-mono-retro text-sm tracking-wide transition-colors duration-200 ${
                   isActive
-                    ? 'text-white'
-                    : 'text-white/50 hover:text-white/90'
+                    ? 'text-cyan-200'
+                    : 'text-white/45 hover:text-white'
                 }`}
               >
-                {isActive && (
-                  <motion.span
-                    layoutId={`nav-active-${layoutScope}`}
-                    className="glass holo-border absolute inset-0 rounded-lg"
-                    transition={{ type: 'spring', stiffness: 400, damping: 34 }}
-                  />
-                )}
                 <span
-                  className={`relative z-10 text-[10px] tabular-nums ${
-                    isActive ? 'text-cyan-300' : 'text-white/30'
+                  className={`h-1.5 w-1.5 shrink-0 rounded-full transition-all duration-300 ${
+                    isActive
+                      ? 'bg-cyan-300 shadow-[0_0_8px_rgba(34,211,238,0.9)]'
+                      : 'bg-white/20 group-hover:bg-white/50'
                   }`}
-                >
-                  0{i + 1}
-                </span>
-                <span className="relative z-10">{item.label}</span>
-                {isActive && (
-                  <span className="relative z-10 ml-auto h-1.5 w-1.5 rounded-full bg-cyan-300 shadow-[0_0_8px_rgba(34,211,238,0.9)]" />
-                )}
+                />
+                {item.label}
               </a>
             </li>
           );
@@ -93,12 +82,16 @@ const NavContent = ({ active, onNavigate, layoutScope }: NavContentProps) => (
     {/* CTA + status */}
     <div className="mt-6">
       <a
-        href="#votar"
+        href="/acceder"
         onClick={onNavigate}
-        className="group flex items-center justify-between rounded-lg border border-cyan-300/40 bg-cyan-400/5 px-4 py-3 font-display text-sm uppercase tracking-wide text-cyan-100 shadow-[0_0_24px_-10px_rgba(34,211,238,0.9)] transition-colors duration-300 hover:bg-cyan-400/15"
+        className="group relative flex items-center justify-between gap-3 overflow-hidden rounded-sm border border-cyan-300/40 px-4 py-3 font-mono-retro text-[11px] uppercase tracking-[0.3em] text-cyan-100 transition-colors duration-300 hover:text-ink"
       >
-        Acceder
-        <FiArrowUpRight className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+        <span className="absolute inset-0 origin-left scale-x-0 bg-cyan-300 transition-transform duration-300 ease-out group-hover:scale-x-100" />
+        <span className="relative flex items-center gap-2">
+          <span className="h-1.5 w-1.5 rounded-full bg-fuchsia-400 transition-colors duration-300 group-hover:bg-ink" />
+          Acceder
+        </span>
+        <FiArrowRight className="relative transition-transform duration-300 group-hover:translate-x-1" />
       </a>
       <p className="font-mono-retro mt-4 flex items-center gap-2 text-[10px] uppercase tracking-[0.2em] text-white/25">
         <span className="animate-blink text-fuchsia-400">●</span>
@@ -108,26 +101,15 @@ const NavContent = ({ active, onNavigate, layoutScope }: NavContentProps) => (
   </div>
 );
 
+/* Thin right edge that fades out top and bottom — no top/bottom/left "walls" */
+const RightEdge = () => (
+  <span className="pointer-events-none absolute inset-y-0 right-0 w-px bg-gradient-to-b from-transparent via-cyan-400/35 to-transparent" />
+);
+
 const Sidebar = () => {
   const [open, setOpen] = useState(false);
-  const [active, setActive] = useState('inicio');
-
-  // Scrollspy
-  useEffect(() => {
-    const sections = NAV.map((n) => document.getElementById(n.id)).filter(
-      (el): el is HTMLElement => el !== null
-    );
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) setActive(entry.target.id);
-        });
-      },
-      { rootMargin: '-45% 0px -45% 0px' }
-    );
-    sections.forEach((s) => observer.observe(s));
-    return () => observer.disconnect();
-  }, []);
+  const active =
+    typeof window !== 'undefined' ? window.location.pathname : '/';
 
   // Lock body scroll while the mobile drawer is open
   useEffect(() => {
@@ -144,14 +126,15 @@ const Sidebar = () => {
         type="button"
         aria-label="Abrir navegación"
         onClick={() => setOpen(true)}
-        className="glass holo-border fixed left-4 top-4 z-50 flex h-11 w-11 items-center justify-center rounded-lg text-cyan-200 md:hidden"
+        className="glass fixed left-4 top-4 z-50 flex h-11 w-11 items-center justify-center rounded-lg text-cyan-200 md:hidden"
       >
         <FiMenu className="text-xl" />
       </button>
 
       {/* Desktop sidebar */}
-      <aside className="glass holo-border fixed left-0 top-0 z-40 hidden h-screen w-64 border-r border-white/5 md:block">
-        <NavContent active={active} onNavigate={() => {}} layoutScope="desktop" />
+      <aside className="glass fixed left-0 top-0 z-40 hidden h-screen w-64 border-0 md:block">
+        <RightEdge />
+        <NavContent active={active} onNavigate={() => {}} />
       </aside>
 
       {/* Mobile drawer */}
@@ -170,8 +153,9 @@ const Sidebar = () => {
               animate={{ x: 0 }}
               exit={{ x: '-100%' }}
               transition={{ type: 'spring', stiffness: 320, damping: 34 }}
-              className="glass fixed left-0 top-0 z-50 h-screen w-72 border-r border-white/10 md:hidden"
+              className="glass fixed left-0 top-0 z-50 h-screen w-72 border-0 md:hidden"
             >
+              <RightEdge />
               <button
                 type="button"
                 aria-label="Cerrar navegación"
@@ -180,11 +164,7 @@ const Sidebar = () => {
               >
                 <FiX className="text-xl" />
               </button>
-              <NavContent
-                active={active}
-                onNavigate={() => setOpen(false)}
-                layoutScope="mobile"
-              />
+              <NavContent active={active} onNavigate={() => setOpen(false)} />
             </motion.aside>
           </>
         )}

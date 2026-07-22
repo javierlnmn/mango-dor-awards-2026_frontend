@@ -32,13 +32,13 @@ body {
   --animate-scanlines: scanlines 9s linear infinite;
   --animate-blink: blink 1.2s steps(1) infinite;
   --animate-ticker: ticker 26s linear infinite;
-  --animate-grid-drift: grid-drift 14s linear infinite;
+  --animate-grid-drift: grid-drift 24s linear infinite;
   --animate-chroma: chroma 3.2s infinite;
-  --animate-aurora: aurora 18s ease-in-out infinite;
+  --animate-aurora: aurora 34s ease-in-out infinite;
   --animate-holo: holo 8s linear infinite;
   --animate-float: float 7s ease-in-out infinite;
   --animate-sweep: sweep 5s ease-in-out infinite;
-  --animate-pulse-orb: pulse-orb 6s ease-in-out infinite;
+  --animate-pulse-orb: pulse-orb 11s ease-in-out infinite;
   --animate-signal: signal 1.6s ease-in-out infinite;
 }
 
@@ -104,6 +104,8 @@ body {
   }
 }
 
+/* Drift exactly one tile (matches GRID_STYLE background-size) for a seamless,
+   jump-free loop. */
 @keyframes grid-drift {
   from {
     background-position-y: 0;
@@ -142,15 +144,15 @@ body {
   0%,
   100% {
     transform: translate3d(0, 0, 0) scale(1);
-    opacity: 0.55;
+    opacity: 0.5;
   }
   33% {
-    transform: translate3d(4%, -3%, 0) scale(1.1);
-    opacity: 0.75;
+    transform: translate3d(2%, -1.5%, 0) scale(1.04);
+    opacity: 0.62;
   }
   66% {
-    transform: translate3d(-3%, 2%, 0) scale(1.05);
-    opacity: 0.6;
+    transform: translate3d(-1.5%, 1%, 0) scale(1.02);
+    opacity: 0.54;
   }
 }
 
@@ -189,10 +191,10 @@ body {
   0%,
   100% {
     transform: scale(1);
-    opacity: 0.85;
+    opacity: 0.9;
   }
   50% {
-    transform: scale(1.06);
+    transform: scale(1.03);
     opacity: 1;
   }
 }
@@ -211,17 +213,20 @@ body {
 /* Utility classes                                                     */
 /* ------------------------------------------------------------------ */
 
-/* Glass surface */
-.glass {
-  background: linear-gradient(
-    135deg,
-    rgba(139, 92, 246, 0.08),
-    rgba(5, 2, 12, 0.4) 45%,
-    rgba(34, 211, 238, 0.06)
-  );
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+/* Glass surface.
+   In the `components` layer so utilities (e.g. border-0) can override it. */
+@layer components {
+  .glass {
+    background: linear-gradient(
+      135deg,
+      rgba(139, 92, 246, 0.08),
+      rgba(5, 2, 12, 0.4) 45%,
+      rgba(34, 211, 238, 0.06)
+    );
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
 }
 
 /* Gradient hairline border via mask (violet -> cyan).
