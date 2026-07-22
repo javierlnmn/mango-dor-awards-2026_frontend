@@ -1,34 +1,57 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Anton&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700;800;900&display=swap');
 
 @import 'tailwindcss';
 
 html {
-  background-color: black;
+  background-color: #05020c;
   font-family: 'Inter', sans-serif;
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  cursor: default;
 }
 
 @theme {
   --font-display: 'Anton', sans-serif;
+  --font-brutal: 'Unbounded', 'Anton', sans-serif;
   --font-mono-retro: 'Space Mono', monospace;
 
-  --animate-glow: glow 1s linear infinite alternate;
+  /* Signature palette: violet/fuchsia base + electric cyan accent */
+  --color-ink: #05020c;
+  --color-ink-soft: #0b0518;
+  --color-neon-cyan: #22d3ee;
+  --color-neon-violet: #8b5cf6;
+  --color-neon-fuchsia: #e879f9;
 
+  --animate-glow: glow 1s linear infinite alternate;
   --animate-flicker: flicker 6s linear infinite;
   --animate-scanlines: scanlines 9s linear infinite;
   --animate-blink: blink 1.2s steps(1) infinite;
   --animate-ticker: ticker 26s linear infinite;
   --animate-grid-drift: grid-drift 14s linear infinite;
   --animate-chroma: chroma 3.2s infinite;
-  --animate-noise: noise 0.4s steps(2) infinite;
+  --animate-aurora: aurora 18s ease-in-out infinite;
+  --animate-holo: holo 8s linear infinite;
+  --animate-float: float 7s ease-in-out infinite;
+  --animate-sweep: sweep 5s ease-in-out infinite;
+  --animate-pulse-orb: pulse-orb 6s ease-in-out infinite;
+  --animate-signal: signal 1.6s ease-in-out infinite;
 }
+
+/* ------------------------------------------------------------------ */
+/* Keyframes                                                           */
+/* ------------------------------------------------------------------ */
 
 @keyframes glow {
   0% {
-    filter: drop-shadow(0 0 10px rgba(255, 211, 141, 0.3));
+    filter: drop-shadow(0 0 10px rgba(34, 211, 238, 0.25));
   }
   100% {
-    filter: drop-shadow(0 0 10px rgba(255, 247, 234, 0.8));
+    filter: drop-shadow(0 0 14px rgba(232, 121, 249, 0.6));
   }
 }
 
@@ -39,13 +62,13 @@ html {
     opacity: 1;
   }
   93% {
-    opacity: 0.4;
+    opacity: 0.55;
   }
   94% {
     opacity: 1;
   }
   95% {
-    opacity: 0.6;
+    opacity: 0.75;
   }
   96% {
     opacity: 1;
@@ -68,7 +91,7 @@ html {
   }
   50%,
   100% {
-    opacity: 0;
+    opacity: 0.15;
   }
 }
 
@@ -90,49 +113,217 @@ html {
   }
 }
 
+/* Subtle chromatic aberration — hologram, not broken TV */
 @keyframes chroma {
   0%,
   100% {
     text-shadow:
-      2px 0 #f0abfc,
-      -2px 0 #22d3ee;
+      1px 0 rgba(232, 121, 249, 0.5),
+      -1px 0 rgba(34, 211, 238, 0.5);
   }
   92% {
     text-shadow:
-      2px 0 #f0abfc,
-      -2px 0 #22d3ee;
+      1px 0 rgba(232, 121, 249, 0.5),
+      -1px 0 rgba(34, 211, 238, 0.5);
   }
-  93% {
+  94% {
     text-shadow:
-      -4px 0 #f0abfc,
-      4px 0 #22d3ee;
+      -3px 0 rgba(232, 121, 249, 0.7),
+      3px 0 rgba(34, 211, 238, 0.7);
   }
-  95% {
+  96% {
     text-shadow:
-      3px 1px #f0abfc,
-      -3px -1px #22d3ee;
-  }
-  97% {
-    text-shadow:
-      2px 0 #f0abfc,
-      -2px 0 #22d3ee;
+      2px 1px rgba(232, 121, 249, 0.6),
+      -2px -1px rgba(34, 211, 238, 0.6);
   }
 }
 
-@keyframes noise {
-  0% {
-    transform: translate(0, 0);
-  }
+@keyframes aurora {
+  0%,
   100% {
-    transform: translate(-1%, 1%);
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.55;
   }
+  33% {
+    transform: translate3d(4%, -3%, 0) scale(1.1);
+    opacity: 0.75;
+  }
+  66% {
+    transform: translate3d(-3%, 2%, 0) scale(1.05);
+    opacity: 0.6;
+  }
+}
+
+@keyframes holo {
+  to {
+    background-position: 200% center;
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-14px);
+  }
+}
+
+@keyframes sweep {
+  0%,
+  100% {
+    transform: translateX(-120%);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  70% {
+    transform: translateX(120%);
+    opacity: 0;
+  }
+}
+
+@keyframes pulse-orb {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.85;
+  }
+  50% {
+    transform: scale(1.06);
+    opacity: 1;
+  }
+}
+
+@keyframes signal {
+  0%,
+  100% {
+    transform: scaleY(0.35);
+  }
+  50% {
+    transform: scaleY(1);
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Utility classes                                                     */
+/* ------------------------------------------------------------------ */
+
+/* Glass surface */
+.glass {
+  background: linear-gradient(
+    135deg,
+    rgba(139, 92, 246, 0.08),
+    rgba(5, 2, 12, 0.4) 45%,
+    rgba(34, 211, 238, 0.06)
+  );
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Gradient hairline border via mask (violet -> cyan).
+   Declared in the `components` layer so Tailwind positioning utilities
+   (fixed / absolute / sticky) always win over this fallback `relative`. */
+@layer components {
+  .holo-border {
+    position: relative;
+  }
+  .holo-border::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    padding: 1px;
+    border-radius: inherit;
+    background: linear-gradient(
+      135deg,
+      rgba(232, 121, 249, 0.7),
+      rgba(139, 92, 246, 0.15) 40%,
+      rgba(34, 211, 238, 0.7)
+    );
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0.5;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+  }
+  .holo-border:hover::before {
+    opacity: 1;
+  }
+}
+
+/* Holographic gradient text */
+.holo-text {
+  background: linear-gradient(
+    100deg,
+    #f5d0fe 0%,
+    #e879f9 20%,
+    #a855f7 40%,
+    #22d3ee 60%,
+    #e879f9 80%,
+    #f5d0fe 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: var(--animate-holo);
+}
+
+/* Outlined (hollow) brutalist text */
+.text-stroke-cyan {
+  color: transparent;
+  -webkit-text-stroke: 2px rgba(34, 211, 238, 0.85);
+  text-shadow: 0 0 24px rgba(34, 211, 238, 0.35);
+}
+
+/* Neon text glows */
+.glow-cyan {
+  text-shadow:
+    0 0 8px rgba(34, 211, 238, 0.6),
+    0 0 24px rgba(34, 211, 238, 0.35);
+}
+.glow-fuchsia {
+  text-shadow:
+    0 0 8px rgba(232, 121, 249, 0.6),
+    0 0 24px rgba(232, 121, 249, 0.35);
+}
+
+/* Corner viewfinder brackets on a fixed frame */
+.viewfinder::before,
+.viewfinder::after {
+  content: '';
+  position: fixed;
+  width: 26px;
+  height: 26px;
+  z-index: 45;
+  pointer-events: none;
+  border-color: rgba(34, 211, 238, 0.5);
+}
+.viewfinder::before {
+  top: 18px;
+  left: 18px;
+  border-top: 1px solid;
+  border-left: 1px solid;
+}
+.viewfinder::after {
+  bottom: 18px;
+  right: 18px;
+  border-bottom: 1px solid;
+  border-right: 1px solid;
 }
 
 .crt-scanlines {
   background-image: repeating-linear-gradient(
     to bottom,
-    rgba(255, 255, 255, 0.05) 0px,
-    rgba(255, 255, 255, 0.05) 1px,
+    rgba(255, 255, 255, 0.04) 0px,
+    rgba(255, 255, 255, 0.04) 1px,
     transparent 1px,
     transparent 3px
   );
@@ -141,9 +332,14 @@ html {
 .crt-vignette {
   background: radial-gradient(
     ellipse at center,
-    transparent 55%,
-    rgba(0, 0, 0, 0.55) 100%
+    transparent 52%,
+    rgba(0, 0, 0, 0.6) 100%
   );
+}
+
+/* Fine film grain */
+.grain {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E");
 }
 
 .text-glitch {
@@ -160,4 +356,15 @@ html {
   .odometer.odometer-animating-down.odometer-animating
   .odometer-ribbon-inner {
   transition: transform 1s ease-in-out !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
 }

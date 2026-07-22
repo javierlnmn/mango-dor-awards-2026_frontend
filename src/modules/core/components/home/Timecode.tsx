@@ -50,25 +50,22 @@ const Timecode = ({ targetDate }: TimecodeProps) => {
   ];
 
   return (
-    <div className="flex items-start justify-start gap-1 md:gap-3">
-      {units.map((unit, index) => (
-        <div key={unit.label} className="flex items-start">
-          <div className="flex flex-col items-center">
-            <div
-              className="odometer-fast font-mono-retro text-4xl text-fuchsia-400 md:text-6xl"
-              style={{ textShadow: '0 0 16px rgba(232,121,249,0.7)' }}
-            >
-              <Odometer value={unit.value} format="dd" />
-            </div>
-            <span className="mt-2 text-[10px] uppercase tracking-widest text-white/50">
-              {unit.label}
-            </span>
+    <div className="flex flex-wrap items-stretch gap-3 md:gap-4">
+      {units.map((unit) => (
+        <div
+          key={unit.label}
+          className="glass holo-border group relative flex min-w-[74px] flex-1 flex-col items-center overflow-hidden rounded-xl px-3 py-4 md:min-w-[120px] md:px-6 md:py-6"
+        >
+          <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cyan-300/70 to-transparent" />
+          <div
+            className="odometer-fast font-mono-retro text-4xl text-cyan-200 md:text-6xl"
+            style={{ textShadow: '0 0 18px rgba(34,211,238,0.6)' }}
+          >
+            <Odometer value={unit.value} format="dd" />
           </div>
-          {index < units.length - 1 && (
-            <span className="animate-blink font-mono-retro px-1 text-4xl text-fuchsia-400/50 md:text-6xl">
-              :
-            </span>
-          )}
+          <span className="mt-3 text-[10px] uppercase tracking-[0.3em] text-white/45">
+            {unit.label}
+          </span>
         </div>
       ))}
     </div>
