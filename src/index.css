@@ -1,0 +1,163 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap');
+
+@import 'tailwindcss';
+
+html {
+  background-color: black;
+  font-family: 'Inter', sans-serif;
+}
+
+@theme {
+  --font-display: 'Anton', sans-serif;
+  --font-mono-retro: 'Space Mono', monospace;
+
+  --animate-glow: glow 1s linear infinite alternate;
+
+  --animate-flicker: flicker 6s linear infinite;
+  --animate-scanlines: scanlines 9s linear infinite;
+  --animate-blink: blink 1.2s steps(1) infinite;
+  --animate-ticker: ticker 26s linear infinite;
+  --animate-grid-drift: grid-drift 14s linear infinite;
+  --animate-chroma: chroma 3.2s infinite;
+  --animate-noise: noise 0.4s steps(2) infinite;
+}
+
+@keyframes glow {
+  0% {
+    filter: drop-shadow(0 0 10px rgba(255, 211, 141, 0.3));
+  }
+  100% {
+    filter: drop-shadow(0 0 10px rgba(255, 247, 234, 0.8));
+  }
+}
+
+@keyframes flicker {
+  0%,
+  92%,
+  100% {
+    opacity: 1;
+  }
+  93% {
+    opacity: 0.4;
+  }
+  94% {
+    opacity: 1;
+  }
+  95% {
+    opacity: 0.6;
+  }
+  96% {
+    opacity: 1;
+  }
+}
+
+@keyframes scanlines {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 0 100px;
+  }
+}
+
+@keyframes blink {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes ticker {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes grid-drift {
+  from {
+    background-position-y: 0;
+  }
+  to {
+    background-position-y: 80px;
+  }
+}
+
+@keyframes chroma {
+  0%,
+  100% {
+    text-shadow:
+      2px 0 #f0abfc,
+      -2px 0 #22d3ee;
+  }
+  92% {
+    text-shadow:
+      2px 0 #f0abfc,
+      -2px 0 #22d3ee;
+  }
+  93% {
+    text-shadow:
+      -4px 0 #f0abfc,
+      4px 0 #22d3ee;
+  }
+  95% {
+    text-shadow:
+      3px 1px #f0abfc,
+      -3px -1px #22d3ee;
+  }
+  97% {
+    text-shadow:
+      2px 0 #f0abfc,
+      -2px 0 #22d3ee;
+  }
+}
+
+@keyframes noise {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(-1%, 1%);
+  }
+}
+
+.crt-scanlines {
+  background-image: repeating-linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.05) 0px,
+    rgba(255, 255, 255, 0.05) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+}
+
+.crt-vignette {
+  background: radial-gradient(
+    ellipse at center,
+    transparent 55%,
+    rgba(0, 0, 0, 0.55) 100%
+  );
+}
+
+.text-glitch {
+  animation: var(--animate-chroma);
+}
+
+/* Odometer fast animation */
+.odometer-fast .odometer.odometer-animating-up .odometer-ribbon-inner,
+.odometer-fast .odometer.odometer-animating-down .odometer-ribbon-inner {
+  transition: transform 1s ease-in-out !important;
+}
+
+.odometer-fast
+  .odometer.odometer-animating-down.odometer-animating
+  .odometer-ribbon-inner {
+  transition: transform 1s ease-in-out !important;
+}
