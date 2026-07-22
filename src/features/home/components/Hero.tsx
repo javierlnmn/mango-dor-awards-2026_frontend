@@ -1,18 +1,9 @@
 import { motion, useScroll, useTransform } from 'motion/react';
 import { useRef } from 'react';
 
-import BroadcastHud from '@/modules/core/components/home/BroadcastHud';
-
-const STATS = [
-  { value: '08', label: 'Categorías' },
-  { value: '∞', label: 'Egos en juego' },
-  { value: '01', label: 'Noche decisiva' },
-];
-
-const line = {
-  hidden: { opacity: 0, y: 28 },
-  show: { opacity: 1, y: 0 },
-};
+import BroadcastHud from '@/features/home/components/BroadcastHud';
+import { STATS } from '@/features/home/config/content';
+import { lineVariants } from '@/lib/motion';
 
 const Hero = () => {
   const ref = useRef<HTMLElement>(null);
@@ -47,7 +38,7 @@ const Hero = () => {
         className="flex flex-1 flex-col justify-center md:pl-[3vw] lg:pl-[6vw]"
       >
         <motion.p
-          variants={line}
+          variants={lineVariants}
           transition={{ duration: 0.6, ease: 'easeOut' }}
           className="font-mono-retro mb-8 flex items-center gap-3 text-xs uppercase tracking-[0.35em] text-cyan-300/80"
         >
@@ -57,21 +48,21 @@ const Hero = () => {
 
         <h1 className="font-brutal uppercase leading-[0.78]">
           <motion.span
-            variants={line}
+            variants={lineVariants}
             transition={{ duration: 0.6, ease: 'easeOut' }}
             className="holo-text block text-[clamp(3.4rem,12.5vw,11rem)] font-black tracking-tighter [filter:drop-shadow(0_0_28px_rgba(139,92,246,0.4))]"
           >
             Mango
           </motion.span>
           <motion.span
-            variants={line}
+            variants={lineVariants}
             transition={{ duration: 0.6, ease: 'easeOut' }}
             className="text-stroke-cyan font-brutal ml-[16%] block text-[clamp(3.4rem,12.5vw,11rem)] font-black tracking-tighter md:ml-[24%]"
           >
             D'Or
           </motion.span>
           <motion.span
-            variants={line}
+            variants={lineVariants}
             transition={{ duration: 0.6, ease: 'easeOut' }}
             className="ml-[4%] mt-5 flex items-center gap-4 md:gap-6"
           >

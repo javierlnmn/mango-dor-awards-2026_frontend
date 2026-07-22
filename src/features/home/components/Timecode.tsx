@@ -3,6 +3,8 @@ import 'odometer/themes/odometer-theme-default.css';
 import { useEffect, useState } from 'react';
 import Odometer from 'react-odometerjs';
 
+import { palette, withAlpha } from '@/lib/theme';
+
 interface TimeLeft {
   days: number;
   hours: number;
@@ -55,7 +57,7 @@ const Timecode = ({ targetDate }: TimecodeProps) => {
         <div key={unit.label} className="flex flex-col">
           <div
             className="odometer-fast font-brutal text-6xl font-black leading-none text-white md:text-8xl"
-            style={{ textShadow: '0 0 26px rgba(34,211,238,0.45)' }}
+            style={{ textShadow: `0 0 26px ${withAlpha(palette.cyan, 0.45)}` }}
           >
             <Odometer value={unit.value} format="dd" />
           </div>

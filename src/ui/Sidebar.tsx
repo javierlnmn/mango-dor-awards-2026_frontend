@@ -1,21 +1,10 @@
 import { AnimatePresence, motion } from 'motion/react';
 import { useEffect, useState } from 'react';
 import { FiArrowRight, FiMenu, FiX } from 'react-icons/fi';
+import { Link, useLocation } from 'react-router-dom';
 
 import logo from '@/assets/logo.png';
-
-interface NavItem {
-  href: string;
-  label: string;
-}
-
-const NAV: NavItem[] = [
-  { href: '/', label: 'Inicio' },
-  { href: '/candidatos', label: 'Candidatos' },
-  { href: '/categorias', label: 'Categorías' },
-  { href: '/votar', label: 'Votar' },
-  { href: '/resultados', label: 'Resultados' },
-];
+import { NAV } from '@/config/navigation';
 
 interface NavContentProps {
   active: string;
@@ -25,11 +14,7 @@ interface NavContentProps {
 const NavContent = ({ active, onNavigate }: NavContentProps) => (
   <div className="flex h-full flex-col p-6">
     {/* Emblem */}
-    <a
-      href="/"
-      onClick={onNavigate}
-      className="group flex items-center gap-3"
-    >
+    <Link to="/" onClick={onNavigate} className="group flex items-center gap-3">
       <img
         src={logo}
         alt="Mango D'Or Awards"
@@ -43,7 +28,7 @@ const NavContent = ({ active, onNavigate }: NavContentProps) => (
           Awards 26
         </span>
       </span>
-    </a>
+    </Link>
 
     {/* Nav */}
     <nav className="mt-12 flex-1">
@@ -55,8 +40,8 @@ const NavContent = ({ active, onNavigate }: NavContentProps) => (
           const isActive = active === item.href;
           return (
             <li key={item.href}>
-              <a
-                href={item.href}
+              <Link
+                to={item.href}
                 onClick={onNavigate}
                 className={`group flex items-center gap-3 py-2 font-mono-retro text-sm tracking-wide transition-colors duration-200 ${
                   isActive
@@ -72,7 +57,7 @@ const NavContent = ({ active, onNavigate }: NavContentProps) => (
                   }`}
                 />
                 {item.label}
-              </a>
+              </Link>
             </li>
           );
         })}
@@ -81,8 +66,8 @@ const NavContent = ({ active, onNavigate }: NavContentProps) => (
 
     {/* CTA + status */}
     <div className="mt-6">
-      <a
-        href="/acceder"
+      <Link
+        to="/acceder"
         onClick={onNavigate}
         className="group relative flex items-center justify-between gap-3 overflow-hidden rounded-sm border border-cyan-300/40 px-4 py-3 font-mono-retro text-[11px] uppercase tracking-[0.3em] text-cyan-100 transition-colors duration-300 hover:text-ink"
       >
@@ -92,7 +77,7 @@ const NavContent = ({ active, onNavigate }: NavContentProps) => (
           Acceder
         </span>
         <FiArrowRight className="relative transition-transform duration-300 group-hover:translate-x-1" />
-      </a>
+      </Link>
       <p className="font-mono-retro mt-4 flex items-center gap-2 text-[10px] uppercase tracking-[0.2em] text-white/25">
         <span className="animate-blink text-fuchsia-400">●</span>
         Señal estable
@@ -108,8 +93,7 @@ const RightEdge = () => (
 
 const Sidebar = () => {
   const [open, setOpen] = useState(false);
-  const active =
-    typeof window !== 'undefined' ? window.location.pathname : '/';
+  const { pathname: active } = useLocation();
 
   // Lock body scroll while the mobile drawer is open
   useEffect(() => {

@@ -1,5 +1,7 @@
 import { motion } from 'motion/react';
 
+import { palette, withAlpha } from '@/lib/theme';
+
 // Deterministic pseudo-random field (no Math.random so SSR/HMR stay stable)
 const PARTICLES = Array.from({ length: 26 }, (_, i) => {
   const seed = (i * 9301 + 49297) % 233280;
@@ -31,11 +33,11 @@ const Particles = () => {
             width: p.size,
             height: p.size,
             background: p.cyan
-              ? 'rgba(34,211,238,0.9)'
-              : 'rgba(232,121,249,0.85)',
+              ? withAlpha(palette.cyan, 0.9)
+              : withAlpha(palette.fuchsia, 0.85),
             boxShadow: p.cyan
-              ? '0 0 6px rgba(34,211,238,0.8)'
-              : '0 0 6px rgba(232,121,249,0.8)',
+              ? `0 0 6px ${withAlpha(palette.cyan, 0.8)}`
+              : `0 0 6px ${withAlpha(palette.fuchsia, 0.8)}`,
           }}
           animate={{ y: [0, -22, 0], opacity: [0.15, 0.8, 0.15] }}
           transition={{
