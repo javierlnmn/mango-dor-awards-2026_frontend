@@ -140,18 +140,21 @@ body {
   }
 }
 
+/* Translate + opacity only. Scaling a heavily-blurred layer forces the browser
+   to re-rasterise the blur every frame (very expensive, esp. Firefox); a pure
+   translate keeps the cached raster and just moves it on the GPU. */
 @keyframes aurora {
   0%,
   100% {
-    transform: translate3d(0, 0, 0) scale(1);
+    transform: translate3d(0, 0, 0);
     opacity: 0.5;
   }
   33% {
-    transform: translate3d(2%, -1.5%, 0) scale(1.04);
+    transform: translate3d(2%, -1.5%, 0);
     opacity: 0.62;
   }
   66% {
-    transform: translate3d(-1.5%, 1%, 0) scale(1.02);
+    transform: translate3d(-1.5%, 1%, 0);
     opacity: 0.54;
   }
 }
@@ -187,14 +190,14 @@ body {
   }
 }
 
+/* Opacity-only pulse. The orb is `blur-[90px]`, so animating scale would
+   re-rasterise that blur each frame; the 1.03 scale was visually negligible. */
 @keyframes pulse-orb {
   0%,
   100% {
-    transform: scale(1);
     opacity: 0.9;
   }
   50% {
-    transform: scale(1.03);
     opacity: 1;
   }
 }
@@ -332,6 +335,8 @@ body {
     transparent 1px,
     transparent 3px
   );
+  /* Promote to its own cached layer so animated siblings don't repaint it. */
+  transform: translateZ(0);
 }
 
 .crt-vignette {
@@ -345,6 +350,9 @@ body {
 /* Fine film grain */
 .grain {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E");
+  /* feTurbulence noise is very expensive to rasterise; cache it on its own
+     layer so it is painted once and never re-rasterised on sibling animation. */
+  transform: translateZ(0);
 }
 
 .text-glitch {
@@ -361,6 +369,14 @@ body {
   .odometer.odometer-animating-down.odometer-animating
   .odometer-ribbon-inner {
   transition: transform 1s ease-in-out !important;
+}
+
+/* When the tab is backgrounded, freeze every animation so the compositor idles.
+   No visible effect — the toggle only applies while the page is hidden. */
+html[data-hidden='true'] *,
+html[data-hidden='true'] *::before,
+html[data-hidden='true'] *::after {
+  animation-play-state: paused !important;
 }
 
 @media (prefers-reduced-motion: reduce) {
