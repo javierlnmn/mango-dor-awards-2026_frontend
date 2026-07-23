@@ -67,7 +67,7 @@ const NavContent = ({ active, onNavigate }: NavContentProps) => (
     {/* CTA + status */}
     <div className="mt-6">
       <Link
-        to="/acceder"
+        to="/access"
         onClick={onNavigate}
         className="group relative flex items-center justify-between gap-3 overflow-hidden rounded-sm border border-cyan-300/40 px-4 py-3 font-mono-retro text-[11px] uppercase tracking-[0.3em] text-cyan-100 transition-colors duration-300 hover:text-ink"
       >

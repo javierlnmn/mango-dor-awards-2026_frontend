@@ -1,11 +1,9 @@
 /* eslint-disable react-refresh/only-export-components -- router config module, not a component file */
 import { createBrowserRouter, Outlet } from 'react-router-dom';
 
-import CandidatesPage from '@/features/candidates/pages/CandidatesPage';
-import CategoriesPage from '@/features/categories/pages/CategoriesPage';
-import HomePage from '@/features/home/pages/HomePage';
-import ResultsPage from '@/features/results/pages/ResultsPage';
-import VotePage from '@/features/vote/pages/VotePage';
+import CandidatesPage from '@/modules/candidates/pages/CandidatesPage';
+import CategoriesPage from '@/modules/categories/pages/CategoriesPage';
+import HomePage from '@/modules/landing/pages/HomePage';
 import Layout from '@/ui/Layout';
 import PagePlaceholder from '@/ui/PagePlaceholder';
 
@@ -20,12 +18,10 @@ export const router = createBrowserRouter([
     element: <RootLayout />,
     children: [
       { path: '/', element: <HomePage /> },
-      { path: '/candidatos', element: <CandidatesPage /> },
-      { path: '/categorias', element: <CategoriesPage /> },
-      { path: '/votar', element: <VotePage /> },
-      { path: '/resultados', element: <ResultsPage /> },
+      { path: '/candidates', element: <CandidatesPage /> },
+      { path: '/categories', element: <CategoriesPage /> },
       {
-        path: '/acceder',
+        path: '/access',
         element: (
           <PagePlaceholder
             label="Acceso · Cuenta"

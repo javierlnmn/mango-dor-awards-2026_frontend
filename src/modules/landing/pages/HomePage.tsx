@@ -1,16 +1,16 @@
 import { motion } from 'motion/react';
 
-import { CATEGORIES } from '@/config/categories';
 import { SITE } from '@/config/site';
-import ChannelCard from '@/features/home/components/ChannelCard';
-import Chyron from '@/features/home/components/Chyron';
-import Hero from '@/features/home/components/Hero';
-import Timecode from '@/features/home/components/Timecode';
-import VcrSteps from '@/features/home/components/VcrSteps';
-import { CHANNELS, STEPS } from '@/features/home/config/content';
+import { CATEGORIES } from '@/modules/categories/config/categories';
+import ChannelCard from '@/modules/landing/components/ChannelCard';
+import Chyron from '@/modules/landing/components/Chyron';
+import GlitchHeadline from '@/modules/landing/components/GlitchHeadline';
+import Hero from '@/modules/landing/components/Hero';
+import PlayButton from '@/modules/landing/components/PlayButton';
+import Timecode from '@/modules/landing/components/Timecode';
+import VcrSteps from '@/modules/landing/components/VcrSteps';
+import { CHANNELS, STEPS } from '@/modules/landing/config/content';
 import { revealOnView } from '@/lib/motion';
-import GlitchHeadline from '@/ui/GlitchHeadline';
-import PlayButton from '@/ui/PlayButton';
 import SectionHeading from '@/ui/SectionHeading';
 
 const HomePage = () => {
@@ -21,7 +21,7 @@ const HomePage = () => {
       {/* Programming grid */}
       <motion.section
         {...revealOnView}
-        id="programacion"
+        id="programming"
         className="mx-auto max-w-6xl scroll-mt-20 px-6 pt-24 md:px-12"
       >
         <SectionHeading
@@ -44,7 +44,7 @@ const HomePage = () => {
       {/* Chyron */}
       <motion.div
         {...revealOnView}
-        id="categorias"
+        id="categories"
         className="my-20 w-full scroll-mt-20"
       >
         <Chyron items={CATEGORIES} />
@@ -54,7 +54,7 @@ const HomePage = () => {
         {/* Steps */}
         <motion.section
           {...revealOnView}
-          id="votar"
+          id="vote"
           className="max-w-2xl scroll-mt-20"
         >
           <SectionHeading label="Guía de Programación" title="Cómo sintonizar" />
@@ -66,7 +66,7 @@ const HomePage = () => {
         {/* Countdown */}
         <motion.section
           {...revealOnView}
-          id="cuenta-atras"
+          id="countdown"
           className="scroll-mt-20"
         >
           <SectionHeading

@@ -6,8 +6,6 @@ export interface NavItem {
 /** Sidebar navigation — one entry per site page. */
 export const NAV: NavItem[] = [
   { href: '/', label: 'Inicio' },
-  { href: '/candidatos', label: 'Candidatos' },
-  { href: '/categorias', label: 'Categorías' },
-  { href: '/votar', label: 'Votar' },
-  { href: '/resultados', label: 'Resultados' },
+  { href: '/candidates', label: 'Candidatos' },
+  { href: '/categories', label: 'Categorías' },
 ];

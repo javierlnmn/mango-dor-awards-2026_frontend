@@ -1,8 +1,8 @@
 import { motion, useScroll, useTransform } from 'motion/react';
 import { useRef } from 'react';
 
-import BroadcastHud from '@/features/home/components/BroadcastHud';
-import { STATS } from '@/features/home/config/content';
+import BroadcastHud from '@/modules/landing/components/BroadcastHud';
+import { STATS } from '@/modules/landing/config/content';
 import { lineVariants } from '@/lib/motion';
 
 const Hero = () => {
@@ -19,7 +19,7 @@ const Hero = () => {
   return (
     <section
       ref={ref}
-      id="inicio"
+      id="home"
       className="relative flex min-h-screen flex-col px-6 pb-10 pt-24 md:px-12 md:pt-20"
     >
       <BroadcastHud />
