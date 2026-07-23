@@ -52,11 +52,11 @@ const Timecode = ({ targetDate }: TimecodeProps) => {
   ];
 
   return (
-    <div className="flex flex-wrap items-end gap-x-8 gap-y-6 md:gap-x-14">
+    <div className="flex flex-wrap items-end justify-end gap-x-8 gap-y-6 md:gap-x-14">
       {units.map((unit) => (
-        <div key={unit.label} className="flex flex-col">
+        <div key={unit.label} className="flex flex-col items-end">
           <div
-            className="odometer-fast font-brutal text-6xl font-black leading-none text-white md:text-8xl"
+            className="odometer-fast text-5xl font-black leading-none text-white md:text-6xl"
             style={{ textShadow: `0 0 26px ${withAlpha(palette.cyan, 0.45)}` }}
           >
             <Odometer value={unit.value} format="dd" />

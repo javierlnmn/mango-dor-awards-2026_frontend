@@ -1,22 +1,41 @@
 import { type MouseEvent, useRef } from 'react';
 import { type IconType } from 'react-icons';
+import { Link } from 'react-router-dom';
+
+import { cn } from '@/lib/cn';
 
 interface ChannelCardProps {
   index: number;
   icon: IconType;
   title: string;
   description: React.ReactNode;
+  to: string;
+  className?: string;
+  /** Direction the card slides on hover. @default 'up' */
+  hoverDirection?: 'up' | 'left' | 'right';
+  /** Whether the card rises above its siblings on hover. @default true */
+  raiseOnHover?: boolean;
 }
+
+const HOVER_TRANSLATE = {
+  up: 'hover:-translate-y-1',
+  left: 'hover:-translate-x-2',
+  right: 'hover:translate-x-2',
+};
 
 const ChannelCard = ({
   index,
   icon: Icon,
   title,
   description,
+  to,
+  className,
+  hoverDirection = 'up',
+  raiseOnHover = true,
 }: ChannelCardProps) => {
-  const ref = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLAnchorElement>(null);
 
-  const handleMove = (e: MouseEvent<HTMLDivElement>) => {
+  const handleMove = (e: MouseEvent<HTMLAnchorElement>) => {
     const el = ref.current;
     if (!el) return;
     const rect = el.getBoundingClientRect();
@@ -25,10 +44,16 @@ const ChannelCard = ({
   };
 
   return (
-    <div
+    <Link
       ref={ref}
+      to={to}
       onMouseMove={handleMove}
-      className="group glass holo-border relative overflow-hidden rounded-xl p-6 transition-transform duration-300 hover:-translate-y-1"
+      className={cn(
+        'group glass holo-border relative z-0 block overflow-hidden rounded-xl p-6 transition-transform duration-300',
+        raiseOnHover && 'hover:z-10',
+        HOVER_TRANSLATE[hoverDirection],
+        className
+      )}
     >
       {/* Cursor-follow spotlight */}
       <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 [background:radial-gradient(240px_circle_at_var(--mx,50%)_var(--my,50%),rgba(34,211,238,0.14),transparent_70%)] group-hover:opacity-100" />
@@ -50,7 +75,7 @@ const ChannelCard = ({
         </h3>
         <p className="text-sm leading-relaxed text-white/60">{description}</p>
       </div>
-    </div>
+    </Link>
   );
 };
 

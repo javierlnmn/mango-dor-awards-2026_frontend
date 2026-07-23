@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Anton&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
 @import 'tailwindcss';
 
@@ -19,6 +20,7 @@ body {
   --font-display: 'Anton', sans-serif;
   --font-brutal: 'Unbounded', 'Anton', sans-serif;
   --font-mono-retro: 'Space Mono', monospace;
+  --font-digital: 'Press Start 2P', system-ui, sans-serif;
 
   /* Signature palette: violet/fuchsia base + electric cyan accent */
   --color-ink: #05020c;
@@ -357,6 +359,13 @@ body {
 
 .text-glitch {
   animation: var(--animate-chroma);
+}
+
+/* Force our digital font over odometer's own theme font-family
+   (`.odometer.odometer-auto-theme` is two classes, so it otherwise
+   outranks a single Tailwind utility class regardless of import order). */
+.odometer-fast .odometer {
+  font-family: var(--font-digital) !important;
 }
 
 /* Odometer fast animation */
