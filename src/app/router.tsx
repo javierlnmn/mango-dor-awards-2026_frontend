@@ -1,4 +1,3 @@
-/* eslint-disable react-refresh/only-export-components -- router config module, not a component file */
 import { createBrowserRouter, Outlet } from 'react-router-dom';
 
 import CandidatesPage from '@/modules/candidates/pages/CandidatesPage';
@@ -7,15 +6,13 @@ import HomePage from '@/modules/landing/pages/HomePage';
 import Layout from '@/ui/Layout';
 import PagePlaceholder from '@/ui/PagePlaceholder';
 
-const RootLayout = () => (
-  <Layout>
-    <Outlet />
-  </Layout>
-);
-
 export const router = createBrowserRouter([
   {
-    element: <RootLayout />,
+    element: (
+      <Layout>
+        <Outlet />
+      </Layout>
+    ),
     children: [
       { path: '/', element: <HomePage /> },
       { path: '/candidates', element: <CandidatesPage /> },
