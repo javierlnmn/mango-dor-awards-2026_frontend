@@ -1,16 +1,17 @@
-import { createBrowserRouter, Outlet } from 'react-router-dom';
+import { createBrowserRouter } from 'react-router-dom';
 
 import CandidatesPage from '@/modules/candidates/pages/CandidatesPage';
 import CategoriesPage from '@/modules/categories/pages/CategoriesPage';
 import HomePage from '@/modules/landing/pages/HomePage';
 import Layout from '@/ui/Layout';
 import PagePlaceholder from '@/ui/PagePlaceholder';
+import PageTransition from '@/ui/PageTransition';
 
 export const router = createBrowserRouter([
   {
     element: (
       <Layout>
-        <Outlet />
+        <PageTransition />
       </Layout>
     ),
     children: [
